@@ -20,8 +20,18 @@ def simple_get(url):
 
 # Function to get a list of all flavors
 def GetFlavors(request):
+	#print(request.option)
+	flavors = []
+	# Loop through all options
 	for i, li in enumerate(request.select('option')):
-		print(li.text)
+		flavor = li.text
+		# Check if we hit the end of the list
+		if (flavor.find('Add $') != -1):
+			break
+		# Check if contains new wording and remove it, then add to the list
+		flavor = flavor.split(' - New')[0]
+		flavors.append(flavor)
+	return flavors
 
 # Main
 for url in url_list:
