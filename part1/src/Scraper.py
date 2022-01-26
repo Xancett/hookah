@@ -52,30 +52,6 @@ def GetDescriptions(request):
 			print("Flavor: ", flavor)
 			print("Description: ", description)
 	return
-	# Loop through all options looking for the flavor descriptions
-	for i, li in enumerate(request.select('div')):
-		for j, lj in enumerate(li.select('div')):
-			if (lj.find("-") != -1):
-				pass
-				#print(lj)
-			#i = lj.find("</span>")
-			#data = str(lj)
-			#while (i != -1):
-				#data = data[i:]
-				#print(data[0:data.find("<br/>")])
-				#data = data[1:]
-				#i = data.find("</span>")
-			#for k, lk in enumerate(lj.select('span')):
-				# Check for camel case with lk.text?
-				#print("LK")
-				#print(lk)
-				#print("TEXT")
-				#print(lk.text)
-				#if (lk.text == "Lemon"):
-					#for q, lq in enumerate(lj.select('br')):
-						#print(lq)
-					#print(lj)
-	pass
 
 # Main
 for url in url_list:
