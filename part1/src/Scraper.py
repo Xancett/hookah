@@ -18,20 +18,6 @@ def simple_get(url):
 		log_error('Error during request')
 		return none
 
-# Function to get a list of all flavors - OLD, DO NOT USE
-def GetFlavors(request):
-	#print(request.option)
-	flavors = []
-	# Loop through all options
-	for i, li in enumerate(request.select('option')):
-		flavor = li.text
-		# Check if we hit the end of the list
-		if (flavor.find('Add $') != -1):
-			break
-		# Check if contains new wording and remove it, then add to the list
-		flavor = flavor.split(' - New')[0]
-		flavors.append(flavor)
-	return flavors
 
 # Function to get the description for each flavor
 def GetDescriptions(request):
