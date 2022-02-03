@@ -44,7 +44,14 @@ def GetDescriptions(request):
 		if (option.next_element.name != "h2" and option.previous_element.name != "h2"):
 			flavor = option.previous_element.previous_element.text
 			description = ""
-			seperator = "-" if flavor.find("-") != -1 else "  "
+			seperatorList = ["-", "  ", chr(150)]
+			seperator = "-"
+			for i in seperatorList:
+				if (flavor.find(i) != -1):
+					seperator = i
+					break
+			#seperator = "-" if flavor.find("-") != -1 else "  "
+			#seperator = "  " if flavor.find("  ") != -1 else "–"
 			if (flavor.find(seperator) == -1):
 				continue
 			description = str(flavor.split(seperator)[1])
