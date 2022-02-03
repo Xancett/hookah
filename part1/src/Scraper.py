@@ -3,6 +3,15 @@ from requests.exceptions import RequestException
 from contextlib import closing
 from bs4 import BeautifulSoup
 
+data_list = {
+	"Starbuzz": 'https://www.hookahwholesalers.com/p-4107-Wholesale-Starbuzz-Shisha-Tobacco.html',
+	"Fumari": 'https://www.hookahwholesalers.com/p-4700-fumari-100g-shisha-tobacco.html',
+	"Social Smoke": 'https://www.hookahwholesalers.com/p-5597-social-smoke-100g-tin.html',
+	"Ugly Shisha": 'https://www.hookahwholesalers.com/p-16508-ugly-shisha-tobacco.html',
+	"Haze": 'https://www.hookahwholesalers.com/p-17570-haze-shisha-tobacco-250.html',
+	"Trifecta Blonde": 'https://www.hookahwholesalers.com/p-16409-trifecta-shisha-tobacco.html',
+	"Trifecta Dark Leaf": 'https://www.hookahwholesalers.com/p-16397-trifecta-dark-leaf-shisha-tobacco.html'
+}
 url_list = [
 	'https://www.hookahwholesalers.com/p-4107-Wholesale-Starbuzz-Shisha-Tobacco.html'
 ]
