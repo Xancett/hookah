@@ -2,6 +2,7 @@ from requests import get
 from requests.exceptions import RequestException
 from contextlib import closing
 from bs4 import BeautifulSoup
+import json
 
 data_list = {
 	"Starbuzz": 'https://www.hookahwholesalers.com/p-4107-Wholesale-Starbuzz-Shisha-Tobacco.html',
@@ -15,6 +16,7 @@ data_list = {
 url_list = [
 	'https://www.hookahwholesalers.com/p-4107-Wholesale-Starbuzz-Shisha-Tobacco.html'
 ]
+flavorDatabase = {}
 
 # Function to get the URL content
 def simple_get(url):
@@ -32,9 +34,7 @@ def simple_get(url):
 def GetDescriptions(request):
 	descriptions = request.find_all("div", {"class": "pcShowProductSDesc"})
 	closingtime = descriptions[0].find_all("br")
-	#print(len(closingtime))
-	#print(closingtime[2].previous_element.previous_element.text)
-	#print(closingtime[0].next_element.find("h2"))
+	flavorList = {}
 	for option in closingtime:
 		if (option.next_element.name != "h2" and option.previous_element.name != "h2"):
 			flavor = option.previous_element.previous_element.text
@@ -51,13 +51,15 @@ def GetDescriptions(request):
 				continue
 			description = str(flavor.split(seperator)[1])
 			flavor = str(flavor.split(seperator)[0])
-			print("Flavor: ", flavor)
-			print("Description: ", description)
-	return
+			flavorList[flavor] = description
+			#print("Flavor: ", flavor)
+			#print("Description: ", description)
+	return flavorList
 
 # Main
-for url in url_list:
-	pageRequest = simple_get(url)
+for url in data_list:
+	pageRequest = simple_get(data_list[url])
 	page = BeautifulSoup(pageRequest, 'html.parser')
 	#GetFlavors(page)
-	GetDescriptions(page)
+	flavorDatabase[url] = GetDescriptions(page)
+print(json.dumps(flavorDatabase))
