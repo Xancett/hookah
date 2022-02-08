@@ -6,12 +6,21 @@ def lambda_handler(event, context):
 
 
 def Respond(res):
-    req = res['data']
-    requested = {}
+    requested = { "Datawasnot" : "Foundsorry" }
+    if ('data' in res):
+        req = res['data']
+    else:
+        req = 'fail'
+    if ('body' in res):
+        requested = { "Bodyfound" : "lookingfordata"}
+        if ('data' in res['body']):
+            res = json.loads(res['body'])
+            req = res['data']
     if (req == 'brands'):
         requested = GetBrands()
     if (req == 'flavors'):
         requested = GetFlavors(res['brand'])
+    
     return {
         'statusCode' : 200,
         'body' : json.dumps(requested),
