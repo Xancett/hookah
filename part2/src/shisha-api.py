@@ -6,21 +6,20 @@ def lambda_handler(event, context):
 
 
 def Respond(res):
-    requested = { "Datawasnot" : "Foundsorry" }
-    if ('data' in res):
-        req = res['data']
-    else:
-        req = 'fail'
+    # Start to build the request
+    requested = {}
     if ('body' in res):
-        requested = { "Bodyfound" : "lookingfordata"}
         if ('data' in res['body']):
             res = json.loads(res['body'])
             req = res['data']
-    if (req == 'brands'):
-        requested = GetBrands()
-    if (req == 'flavors'):
-        requested = GetFlavors(res['brand'])
-    
+            if (req == 'brands'):
+                requested = GetBrands()
+            if (req == 'flavors'):
+                requested = GetFlavors(res['brand'])
+        else:
+            requested = { "Error": "data property not found in body" }
+    else:
+        requested = { "Error": "body not found in  request"}
     return {
         'statusCode' : 200,
         'body' : json.dumps(requested),
