@@ -4,11 +4,17 @@
 
 document.addEventListener('click', e => {
 	// Get the selected object
-	const origin = e.target.closest('a');
+	let origin = e.target.closest('a');
 	// Go through all selectable menu items and remove chosen if found
 	const menuOptions = document.querySelectorAll('#menu');
 	menuOptions.forEach(menu => {
 		if (menu.classList.contains("chosen")) {
+			// Check if we are just selecting the same menu
+			if (menu == origin) {
+				// Set the origin to null so nothing is updated
+				origin = null;
+				return; // So we don't remove 'chosen' from the currently selected menu
+			}
 			menu.classList.remove("chosen");
 		}
 	});
@@ -23,6 +29,3 @@ document.addEventListener('click', e => {
 async function UpdateTable(menuOption) {
 	console.log(menuOption);
 }
-
-// TODO
-// 1. Check that the call for selecting a menu option isn't already selected
