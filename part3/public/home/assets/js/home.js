@@ -11,5 +11,14 @@ document.addEventListener('click', e => {
 	// Change the selected object to be chosen
 	if (origin) {
 		origin.classList.add('chosen');
+		UpdateTable(origin.text);
 	}
 });
+
+// Set the table to fill out from the API call
+async function UpdateTable(menuOption) {
+	console.log(menuOption);
+}
+
+// TODO
+// 1. Check that the call for selecting a menu option isn't already selected
