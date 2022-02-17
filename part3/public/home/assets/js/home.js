@@ -1,3 +1,7 @@
+(function () {
+	UpdateTable('Enjoyed');
+})()
+
 document.addEventListener('click', e => {
 	// Get the selected object
 	const origin = e.target.closest('a');
