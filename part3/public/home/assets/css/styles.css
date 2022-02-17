@@ -1,0 +1,6 @@
+.menu-bar .menu {
+	background-color: transparent;
+}
+.menu-bar .menu .chosen {
+	background-color: rgb(110,180,255);
+}
