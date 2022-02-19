@@ -52,6 +52,36 @@ async function UpdateTable(menuOption) {
 			// Wait again
 			data = await response.json();
 			console.log(data);
+			const table = document.querySelectorAll('#tableOfContents');
+			for (var i = 0; i < Object.keys(data).length; i++) {
+				let row = document.createElement('tr');
+				let cell1 = document.createElement('td');
+				let cell2 = document.createElement('td');
+				let cell3 = document.createElement('td');
+				let cell4 = document.createElement('td');
+				let cell5 = document.createElement('td');
+				cell1.innerText = "Image missing";
+				cell2.innerText = jsonData['brand'];
+				cell3.innerText = Object.keys(data)[i];
+				cell4.innerText = "None";
+				cell5.innerText = "Not rated";
+				row.appendChild(cell1);
+				row.appendChild(cell2);
+				row.appendChild(cell3);
+				row.appendChild(cell4);
+				row.appendChild(cell5);
+				$("#tableOfContents").append(row);
+			}
+			/*
+			let row = document.createElement('tr');
+			let cell = document.createElement('td');
+			cell.innerText = "Hello";
+			row.appendChild(cell);
+			cell.innerText = "World";
+			row.appendChild(cell);
+			//row.appendChild(document.createElement('td').innerHTML("World"));
+			//row.appendChild(document.createElement('td').innerHTML(data[0]));*/
+			$("#tableOfContents").append(row);
 		case 'Enjoyed':
 			break;
 		case 'Plan to smoke':
