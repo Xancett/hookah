@@ -26,6 +26,13 @@ document.addEventListener('click', e => {
 	}
 });
 
+// Set function for scrolling window
+window.onscroll = function (ev) {
+	if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+		console.log("Load more content");
+	}
+}
+
 // Set the table to fill out from the API call
 async function UpdateTable(menuOption) {
 	console.log(menuOption);
