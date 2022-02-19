@@ -21,6 +21,7 @@ document.addEventListener('click', e => {
 	// Change the selected object to be chosen
 	if (origin) {
 		origin.classList.add('chosen');
+		ClearTable();
 		UpdateTable(origin.text);
 	}
 });
@@ -81,7 +82,7 @@ async function UpdateTable(menuOption) {
 			row.appendChild(cell);
 			//row.appendChild(document.createElement('td').innerHTML("World"));
 			//row.appendChild(document.createElement('td').innerHTML(data[0]));*/
-			$("#tableOfContents").append(row);
+			//$("#tableOfContents").append(row);
 		case 'Enjoyed':
 			break;
 		case 'Plan to smoke':
@@ -89,4 +90,8 @@ async function UpdateTable(menuOption) {
 		case 'Disliked':
 			break;
 	}
+}
+
+function ClearTable() {
+	$("#tableOfContents tr").remove();
 }
