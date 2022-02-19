@@ -2,9 +2,11 @@
 	UpdateTable('Enjoyed');
 })()
 
+// Adds the event listener to the menu
 document.addEventListener('click', e => {
 	// Get the selected object
 	let origin = e.target.closest('a');
+	if (!origin) return; // No point in changing anything if what we clicked on is null
 	// Go through all selectable menu items and remove chosen if found
 	const menuOptions = document.querySelectorAll('#menu');
 	menuOptions.forEach(menu => {
