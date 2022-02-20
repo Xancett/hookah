@@ -63,7 +63,7 @@ async function UpdateTable(menuOption) {
 				let data = await response.json();
 				brands = JSON.parse(JSON.stringify(data)); // Deep copy needed
 			}
-			console.log(brands);
+			if (brands['data'] == 'return') return;
 			let jsonData = { 'data': 'flavors', 'brand': brands[Object.keys(brands)[0]] };
 			information['body'] = JSON.stringify(jsonData);
 			response = await fetch(hookahAPI, information);
@@ -90,6 +90,10 @@ async function UpdateTable(menuOption) {
 				$("#tableOfContents").append(row);
 			}
 			delete brands[Object.keys(brands)[0]];
+			// Check if we have hit the end and shouldn't load anymore data
+			if (Object.keys(brands).length == 0) {
+				brands = { 'data': 'return' };
+			}
 		case 'Enjoyed':
 			break;
 		case 'Plan to smoke':
