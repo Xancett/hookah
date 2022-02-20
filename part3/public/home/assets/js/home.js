@@ -2,6 +2,9 @@
 	UpdateTable('Enjoyed');
 })()
 
+// Global variable to hold the different brands from the API
+let brands = {};
+
 // Adds the event listener to the menu
 document.addEventListener('click', e => {
 	// Get the selected object
@@ -32,6 +35,7 @@ document.addEventListener('click', e => {
 window.onscroll = function (ev) {
 	if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
 		console.log("Load more content");
+		UpdateTable('All Flavors');
 	}
 }
 
@@ -41,27 +45,30 @@ async function UpdateTable(menuOption) {
 	let hookahAPI = 'https://er27enht4f.execute-api.us-east-1.amazonaws.com/default/fetch-shisha';
 	switch (menuOption) {
 		case 'All Flavors':
-			// Fetch all flavors from the API
-			let jsonData = { "data": "brands" };
 			const information = {
 				method: "POST",
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify(jsonData)
-			};
-			// Send out information
-			let response = await fetch(hookahAPI, information);
-			// Wait for a response
-			let data = await response.json();
-			console.log(data);
-			jsonData['data'] = "flavors";
-			jsonData['brand'] = data[0];
+				body: ""
+			};	
+			// Check if brands is empty
+			if (Object.keys(brands).length == 0) {
+				// Fetch all flavors from the API
+				let jsonData = { "data": "brands" };
+				information['body'] = JSON.stringify(jsonData);
+				// Send out information
+				let response = await fetch(hookahAPI, information);
+				// Wait for a response
+				let data = await response.json();
+				brands = JSON.parse(JSON.stringify(data)); // Deep copy needed
+			}
+			console.log(brands);
+			let jsonData = { 'data': 'flavors', 'brand': brands[Object.keys(brands)[0]] };
 			information['body'] = JSON.stringify(jsonData);
 			response = await fetch(hookahAPI, information);
 			// Wait again
-			data = await response.json();
-			console.log(data);
+			let data = await response.json();
 			const table = document.querySelectorAll('#tableOfContents');
 			for (var i = 0; i < Object.keys(data).length; i++) {
 				let row = document.createElement('tr');
@@ -82,16 +89,7 @@ async function UpdateTable(menuOption) {
 				row.appendChild(cell5);
 				$("#tableOfContents").append(row);
 			}
-			/*
-			let row = document.createElement('tr');
-			let cell = document.createElement('td');
-			cell.innerText = "Hello";
-			row.appendChild(cell);
-			cell.innerText = "World";
-			row.appendChild(cell);
-			//row.appendChild(document.createElement('td').innerHTML("World"));
-			//row.appendChild(document.createElement('td').innerHTML(data[0]));*/
-			//$("#tableOfContents").append(row);
+			delete brands[Object.keys(brands)[0]];
 		case 'Enjoyed':
 			break;
 		case 'Plan to smoke':
@@ -103,4 +101,5 @@ async function UpdateTable(menuOption) {
 
 function ClearTable() {
 	$("#tableOfContents tr").remove();
+	brands = {};
 }
