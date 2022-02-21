@@ -240,18 +240,6 @@ async function GetList(listRequest) {
 	}
 }
 
-// Comparer function, probably on server-side but needed here for mock data
-function GetSortOrder(prop) {
-	return function (a, b) {
-		if (a[prop] > b[prop]) {
-			return 1;
-		} else if (a[prop] < b[prop]) {
-			return -1;
-		} else {
-			return 0;
-		}
-	}
-}
 
 function ClearTable() {
 	$("#tableOfContents tr").remove();
