@@ -97,11 +97,11 @@ async function UpdateTable(menuOption) {
 			}
 		case 'Enjoyed':
 			listData = await GetList(menuOption);
-			for (var i = 0; i < Object.keys(listData).length; i++) {
-				console.log("Brand: " + listData[i].Brand);
-				console.log("Flavor: " + listData[i].Flavor);
-				console.log("List: " + listData[i].List);
-				console.log("Rating: " + listData[i].Rating);
+			for (var i = 0; i < listData['data'].length; i++) {
+				console.log("Brand: " + listData['data'][i].Brand);
+				console.log("Flavor: " + listData['data'][i].Flavor);
+				console.log("List: " + listData['data'][i].List);
+				console.log("Rating: " + listData['data'][i].Rating);
 			}
 		case 'Plan to smoke':
 			break;
@@ -223,6 +223,17 @@ async function GetList(listRequest) {
 				break;
 		}
 		// Organize data here before returning it
+		let results = data['data'];
+		results.sort(function (a, b) {
+			if (a.Rating > b.Rating) {
+				return -1;
+			} else if (a.Rating < b.Rating) {
+				return 1;
+			} else {
+				return 0;
+			}
+		});
+		data['data'] = results;
 		return data;
 	} catch (error) {
 		console.log(error);
