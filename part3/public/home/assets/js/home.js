@@ -133,86 +133,92 @@ async function GetList(listRequest) {
 		switch (listRequest) {
 			case 'Enjoyed':
 				data = {
-					'0': {
-						'Brand': 'Starbuzz',
-						'Flavor': 'Black Grape',
-						'List': 'Enjoyed',
-						'Rating': '3'
-					},
-					'1': {
-						'Brand': 'Starbuzz',
-						'Flavor': 'Candy',
-						'List': 'Enjoyed',
-						'Rating': '5'
-					},
-					'2': {
-						'Brand': 'Ugly Shisha',
-						'Flavor': 'Hurricane',
-						'List': 'Enjoyed',
-						'Rating': '4'
-					},
-					'3': {
-						'Brand': 'Fumari',
-						'Flavor': 'Sour Cherry',
-						'List': 'Enjoyed',
-						'Rating': '3'
-					}
+					'data': [
+						{
+							'Brand': 'Starbuzz',
+							'Flavor': 'Black Grape',
+							'List': 'Enjoyed',
+							'Rating': '3'
+						},
+						{
+							'Brand': 'Starbuzz',
+							'Flavor': 'Candy',
+							'List': 'Enjoyed',
+							'Rating': '5'
+						},
+						{
+							'Brand': 'Ugly Shisha',
+							'Flavor': 'Hurricane',
+							'List': 'Enjoyed',
+							'Rating': '4'
+						},
+						{
+							'Brand': 'Fumari',
+							'Flavor': 'Sour Cherry',
+							'List': 'Enjoyed',
+							'Rating': '3'
+						}
+					]
 				};
 				break;
 			case 'Plan to smoke':
 				data = {
-					'0': {
-						'Brand': 'Starbuzz',
-						'Flavor': 'Classic Mojito',
-						'List': 'Plan to smoke',
-						'Rating': '0'
-					},
-					'1': {
-						'Brand': 'Starbuzz',
-						'Flavor': 'Blue Mist',
-						'List': 'Plan to smoke',
-						'Rating': '0'
-					},
-					'2': {
-						'Brand': 'Ugly Shisha',
-						'Flavor': 'Happy Hour',
-						'List': 'Plan to smoke',
-						'Rating': '3'
-					},
-					'3': {
-						'Brand': 'Fumari',
-						'Flavor': 'Orange Cream',
-						'List': 'Plan to smoke',
-						'Rating': '0'
-					}
+					'data': [
+						{
+							'Brand': 'Starbuzz',
+							'Flavor': 'Classic Mojito',
+							'List': 'Plan to smoke',
+							'Rating': '0'
+						},
+						{
+							'Brand': 'Starbuzz',
+							'Flavor': 'Blue Mist',
+							'List': 'Plan to smoke',
+							'Rating': '0'
+						},
+						{
+							'Brand': 'Ugly Shisha',
+							'Flavor': 'Happy Hour',
+							'List': 'Plan to smoke',
+							'Rating': '3'
+						},
+						{
+							'Brand': 'Fumari',
+							'Flavor': 'Orange Cream',
+							'List': 'Plan to smoke',
+							'Rating': '0'
+						}
+					]
 				};
 				break;
 			case 'Disliked':
 				data = {
-					'0': {
-						'Brand': 'Starbuzz',
-						'Flavor': 'Hard Rush',
-						'List': 'Enjoyed',
-						'Rating': '1'
-					},
-					'1': {
-						'Brand': 'Starbuzz',
-						'Flavor': 'Pink',
-						'List': 'Enjoyed',
-						'Rating': '2'
-					},
-					'2': {
-						'Brand': 'Ugly Shisha',
-						'Flavor': 'Pomegranate',
-						'List': 'Enjoyed',
-						'Rating': '1'
-					},
-					'3': {
-						'Brand': 'Fumari',
-						'Flavor': 'Mint',
-						'List': 'Enjoyed',
-						'Rating': '0'
-					}
+					'data': [
+						{
+							'Brand': 'Starbuzz',
+							'Flavor': 'Hard Rush',
+							'List': 'Enjoyed',
+							'Rating': '1'
+						},
+						{
+							'Brand': 'Starbuzz',
+							'Flavor': 'Pink',
+							'List': 'Enjoyed',
+							'Rating': '2'
+						},
+						{
+							'Brand': 'Ugly Shisha',
+							'Flavor': 'Pomegranate',
+							'List': 'Enjoyed',
+							'Rating': '1'
+						},
+						{
+							'Brand': 'Fumari',
+							'Flavor': 'Mint',
+							'List': 'Enjoyed',
+							'Rating': '0'
+						}
+					]
 				};
 				break;
 		}
@@ -220,6 +226,19 @@ async function GetList(listRequest) {
 		return data;
 	} catch (error) {
 		console.log(error);
+	}
+}
+
+// Comparer function, probably on server-side but needed here for mock data
+function GetSortOrder(prop) {
+	return function (a, b) {
+		if (a[prop] > b[prop]) {
+			return 1;
+		} else if (a[prop] < b[prop]) {
+			return -1;
+		} else {
+			return 0;
+		}
 	}
 }
 
