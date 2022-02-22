@@ -273,11 +273,31 @@ async function GetList(listRequest) {
 
 // Gets the selected option being chosen and changes it 
 function OptionChange(op) {
-	console.log(op.text);
-	// Get brand of selected
-	console.log(op.parentElement.parentElement.parentElement.cells[1].textContent);
-	// Get flavor of selected
-	console.log(op.parentElement.parentElement.parentElement.cells[2].textContent);
+	optionChange = {
+		data : [
+			{
+				'Brand' : op.parentElement.parentElement.parentElement.cells[1].textContent,
+				'Flavor' : op.parentElement.parentElement.parentElement.cells[2].textContent,
+				'List' : op.text
+			}
+		]
+	};
+	UpdateServer(optionChange);
+}
+
+// Updates the server with data
+async function UpdateServer(data) {
+	try {
+		// Setup request
+		const jsonData = { 'inforequest': listRequest };
+		const information = {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(data)
+		};
+	} catch (error) {
+		console.log(error);
+	}
 }
 
 function ClearTable() {
