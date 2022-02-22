@@ -289,7 +289,6 @@ function OptionChange(op) {
 async function UpdateServer(data) {
 	try {
 		// Setup request
-		const jsonData = { 'inforequest': listRequest };
 		const information = {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
