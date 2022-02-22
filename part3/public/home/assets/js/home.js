@@ -106,7 +106,25 @@ async function UpdateTable(menuOption) {
 			cell1.innerText = "Image missing";
 			cell2.innerText = listData['data'][i].Brand;
 			cell3.innerText = listData['data'][i].Flavor;
-			cell4.innerText = listData['data'][i].List;
+			// Create a dropdown
+			let s = document.createElement('select');
+			let op1 = document.createElement('option');
+			op1.text = "Enjoyed";
+			op1.value = "Enjoyed";
+			op1.selected = (menuOption == op1.text);
+			//console.log("Enjoyed: ", op1.selected);
+			let op2 = document.createElement('option');
+			op2.text = "Plan to smoke";
+			op2.value = "Plan to smoke";
+			op2.selected = (menuOption == op2.text);
+			//console.log("Plan to : ", op2.selected);
+			let op3 = document.createElement('option');
+			op3.text = "Disliked";
+			op3.value = "Disliked";
+			op3.selected = (menuOption == op3.text);
+			s.append(op1, op2, op3);
+			cell4.append(s);
+			//cell4.innerText = listData['data'][i].List;
 			cell5.innerText = listData['data'][i].Rating;
 			row.appendChild(cell1);
 			row.appendChild(cell2);
