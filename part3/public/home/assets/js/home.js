@@ -9,6 +9,11 @@ let brands = {};
 document.addEventListener('click', e => {
 	// Get the selected object
 	let origin = e.target.closest('a');
+	// Check if we should foward to optioncheck
+	if (e.target.closest('option') != null) {
+		OptionChange(e.target.closest('option'));
+		return;
+	}
 	if (!origin) return; // No point in changing anything if what we clicked on is null
 	// Go through all selectable menu items and remove chosen if found
 	const menuOptions = document.querySelectorAll('#menu');
@@ -266,6 +271,14 @@ async function GetList(listRequest) {
 	}
 }
 
+// Gets the selected option being chosen and changes it 
+function OptionChange(op) {
+	console.log(op.text);
+	// Get brand of selected
+	console.log(op.parentElement.parentElement.parentElement.cells[1].textContent);
+	// Get flavor of selected
+	console.log(op.parentElement.parentElement.parentElement.cells[2].textContent);
+}
 
 function ClearTable() {
 	$("#tableOfContents tr").remove();
