@@ -39,8 +39,16 @@ document.addEventListener('click', e => {
 // Set function for scrolling window
 window.onscroll = function (ev) {
 	if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-		console.log("Load more content");
-		UpdateTable('All Flavors');
+		// Check which option is chosen
+		const menuOptions = document.querySelectorAll('#menu');
+		menuOptions.forEach(menu => {
+		if (menu.classList.contains("chosen")) {
+			// Check if All Flavors is selected
+			if (menu.textContent == 'All Flavors') {
+				UpdateTable('All Flavors');
+			}
+		}
+	});
 	}
 }
 
