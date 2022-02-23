@@ -294,7 +294,6 @@ async function GetList(listRequest) {
 
 // Gets the selected option being chosen and changes it 
 function OptionChange(op) {
-	console.log(op.cells[4].children[0].getAttribute("value"));
 	optionChange = {
 		data : [
 			{
@@ -306,7 +305,6 @@ function OptionChange(op) {
 		]
 	};
 	UpdateServer(optionChange);
-	console.log(optionChange);
 }
 
 // Updates the server with data
