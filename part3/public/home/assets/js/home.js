@@ -54,7 +54,6 @@ window.onscroll = function (ev) {
 
 // Set the table to fill out from the API call
 async function UpdateTable(menuOption) {
-	console.log(menuOption);
 	let hookahAPI = 'https://er27enht4f.execute-api.us-east-1.amazonaws.com/default/fetch-shisha';
 	let listData = {};
 	if (menuOption == 'All Flavors') {
