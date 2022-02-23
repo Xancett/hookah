@@ -14,6 +14,8 @@ document.addEventListener('click', e => {
 		OptionChange(e.target.closest('option'));
 		return;
 	}
+	// Check if we are trying to manipulate the labels for ratings
+	if (e.target.closest('label') != null) { console.log("Selecting rating") }
 	if (!origin) return; // No point in changing anything if what we clicked on is null
 	// Go through all selectable menu items and remove chosen if found
 	const menuOptions = document.querySelectorAll('#menu');
@@ -138,8 +140,8 @@ async function UpdateTable(menuOption) {
 			Object.assign(op3, { "text": "Disliked", "value": "Disliked", "selected": (menuOption == "Disliked") });
 			s.append(op1, op2, op3);
 			cell4.append(s);
-			//cell4.innerText = listData['data'][i].List;
-			cell5.innerText = listData['data'][i].Rating;
+			//cell5.innerText = listData['data'][i].Rating;
+			cell5 = GetStars(listData['data'][i].Rating);
 			row.appendChild(cell1);
 			row.appendChild(cell2);
 			row.appendChild(cell3);
@@ -311,4 +313,16 @@ async function UpdateServer(data) {
 function ClearTable() {
 	$("#tableOfContents tr").remove();
 	brands = {};
+}
+
+function GetStars(rating) {
+	let top = document.createElement('div');
+	top.classList.add("rating");
+	for (var i = 5; i >= 1; i--) {
+		top.appendChild(document.createElement('input'));
+		Object.assign(top.children[top.children.length - 1], { "type": "radio", "name": "rating", "value": i.toString(), "id": i.toString(), "checked": (i == rating) });
+		top.appendChild(document.createElement('label'));
+		Object.assign(top.children[top.children.length - 1], { "for": i.toString(), "innerText": "☆" });
+	}
+	return top;
 }
