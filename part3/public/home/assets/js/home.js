@@ -9,7 +9,10 @@ let brands = {};
 document.addEventListener('click', e => {
 	// Check if we should foward to optioncheck
 	if (e.target.closest('option') != null) {
-		OptionChange(e.target.closest('option'));
+		// Update parent with value
+		e.target.closest('option').parentElement.setAttribute("value", e.target.closest('option').text);
+		// Update server with changes
+		OptionChange(e.target.closest('option').parentElement.parentElement.parentElement);
 		return;
 	}
 	// Check if we are selecting menu items
@@ -35,6 +38,12 @@ document.addEventListener('click', e => {
 			ClearTable();
 			UpdateTable(origin.text);
 		}
+	}
+	// Check if we are selecting a stars rating
+	if (e.target.closest('label') != null) {
+		e.target.closest('label').previousElementSibling.checked = true;
+		e.target.closest('label').parentElement.setAttribute("value", e.target.closest('label').previousElementSibling.value);
+		OptionChange(e.target.closest('label').parentElement.parentElement.parentElement);
 	}
 });
 
@@ -132,6 +141,7 @@ async function UpdateTable(menuOption) {
 			cell3.innerText = listData['data'][i].Flavor;
 			// Create a dropdown
 			let s = document.createElement('select');
+			s.setAttribute("value", menuOption);
 			let op1 = document.createElement('option');
 			Object.assign(op1, { "text": "Enjoyed", "value": "Enjoyed", "selected": (menuOption == "Enjoyed") });
 			let op2 = document.createElement('option');
@@ -141,7 +151,7 @@ async function UpdateTable(menuOption) {
 			s.append(op1, op2, op3);
 			cell4.append(s);
 			//cell5.innerText = listData['data'][i].Rating;
-			cell5 = GetStars(listData['data'][i].Rating, listData['data'][i].Flavor);
+			cell5.appendChild(GetStars(listData['data'][i].Rating, listData['data'][i].Flavor));
 			row.appendChild(cell1);
 			row.appendChild(cell2);
 			row.appendChild(cell3);
@@ -284,16 +294,19 @@ async function GetList(listRequest) {
 
 // Gets the selected option being chosen and changes it 
 function OptionChange(op) {
+	console.log(op.cells[4].children[0].getAttribute("value"));
 	optionChange = {
 		data : [
 			{
-				'Brand' : op.parentElement.parentElement.parentElement.cells[1].textContent,
-				'Flavor' : op.parentElement.parentElement.parentElement.cells[2].textContent,
-				'List' : op.text
+				'Brand' : op.cells[1].textContent,
+				'Flavor' : op.cells[2].textContent,
+				'List': op.cells[3].children[0].getAttribute("value"),
+				'Rating': op.cells[4].children[0].getAttribute("value")
 			}
 		]
 	};
 	UpdateServer(optionChange);
+	console.log(optionChange);
 }
 
 // Updates the server with data
@@ -318,6 +331,7 @@ function ClearTable() {
 function GetStars(rating, flavor) {
 	let top = document.createElement('div');
 	top.classList.add("rating");
+	top.setAttribute("value", rating);
 	for (var i = 5; i >= 1; i--) {
 		top.appendChild(document.createElement('input'));
 		Object.assign(top.children[top.children.length - 1], { "type": "radio", "name": flavor, "value": i.toString(), "id": i.toString(), "checked": (i == rating) });
