@@ -141,7 +141,7 @@ async function UpdateTable(menuOption) {
 			s.append(op1, op2, op3);
 			cell4.append(s);
 			//cell5.innerText = listData['data'][i].Rating;
-			cell5 = GetStars(listData['data'][i].Rating);
+			cell5 = GetStars(listData['data'][i].Rating, listData['data'][i].Flavor);
 			row.appendChild(cell1);
 			row.appendChild(cell2);
 			row.appendChild(cell3);
@@ -315,12 +315,12 @@ function ClearTable() {
 	brands = {};
 }
 
-function GetStars(rating) {
+function GetStars(rating, flavor) {
 	let top = document.createElement('div');
 	top.classList.add("rating");
 	for (var i = 5; i >= 1; i--) {
 		top.appendChild(document.createElement('input'));
-		Object.assign(top.children[top.children.length - 1], { "type": "radio", "name": "rating", "value": i.toString(), "id": i.toString(), "checked": (i == rating) });
+		Object.assign(top.children[top.children.length - 1], { "type": "radio", "name": flavor, "value": i.toString(), "id": i.toString(), "checked": (i == rating) });
 		top.appendChild(document.createElement('label'));
 		Object.assign(top.children[top.children.length - 1], { "for": i.toString(), "innerText": "☆" });
 	}
