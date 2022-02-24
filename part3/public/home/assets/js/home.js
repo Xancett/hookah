@@ -65,6 +65,7 @@ window.onscroll = function (ev) {
 
 // Set the table to fill out from the API call
 async function UpdateTable(menuOption) {
+	LoadingData(true);
 	let hookahAPI = 'https://er27enht4f.execute-api.us-east-1.amazonaws.com/default/fetch-shisha';
 	let listData = {};
 	if (menuOption == 'All Flavors') {
@@ -86,12 +87,16 @@ async function UpdateTable(menuOption) {
 			let data = await response.json();
 			brands = JSON.parse(JSON.stringify(data)); // Deep copy needed
 		}
-		if (brands['data'] == 'return') return;
+		if (brands['data'] == 'return') {
+			LoadingData(false);
+			return;
+		}
 		let jsonData = { 'data': 'flavors', 'brand': brands[Object.keys(brands)[0]] };
 		information['body'] = JSON.stringify(jsonData);
 		response = await fetch(hookahAPI, information);
 		// Wait again
 		let data = await response.json();
+		LoadingData(false);
 		const table = document.querySelectorAll('#tableOfContents');
 		for (var i = 0; i < Object.keys(data).length; i++) {
 			let row = document.createElement('tr');
@@ -130,6 +135,7 @@ async function UpdateTable(menuOption) {
 		}
 	} else {
 		listData = await GetList(menuOption);
+		LoadingData(false);
 		for (var i = 0; i < listData['data'].length; i++) {
 			let row = document.createElement('tr');
 			let cell1 = document.createElement('td');
@@ -338,4 +344,13 @@ function GetStars(rating, flavor) {
 		Object.assign(top.children[top.children.length - 1], { "for": i.toString(), "innerText": "☆" });
 	}
 	return top;
+}
+
+// Sets information in the table on if the table is being loaded or not with data
+function LoadingData(loading) {
+	if (loading) {
+		$("body").addClass("loading");
+	} else {
+		$("body").removeClass("loading");
+	}
 }
