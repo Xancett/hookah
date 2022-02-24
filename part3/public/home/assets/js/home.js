@@ -114,7 +114,8 @@ async function UpdateTable(menuOption) {
 			Object.assign(op3, { "text": "Disliked", "value": "Disliked" });
 			s.append(op0, op1, op2, op3);
 			cell4.append(s);
-			cell5.innerText = "Not rated";
+			cell5.appendChild(document.createElement('div'));
+			Object.assign(cell5.children[0], { "innerText": "Not rated", "value": "0" });
 			row.appendChild(cell1);
 			row.appendChild(cell2);
 			row.appendChild(cell3);
