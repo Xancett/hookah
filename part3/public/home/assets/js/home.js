@@ -176,112 +176,16 @@ async function GetList(listRequest) {
 		const jsonData = { 'inforequest': listRequest };
 		const information = {
 			method: 'POST',
+			mode: 'cors',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(jsonData)
 		};
-		/*
 		// Send out information
 		const response = await fetch('/hookahapi', information);
+		//console.log(response);
 		// Wait for the response
 		let data = await response.json();
 		// Need to organize the data first, then return
-		return data;
-		*/
-		// Mock data starts here
-		let data = {};
-		switch (listRequest) {
-			case 'Enjoyed':
-				data = {
-					'data': [
-						{
-							'Brand': 'Starbuzz',
-							'Flavor': 'Black Grape',
-							'List': 'Enjoyed',
-							'Rating': '3'
-						},
-						{
-							'Brand': 'Starbuzz',
-							'Flavor': 'Candy',
-							'List': 'Enjoyed',
-							'Rating': '5'
-						},
-						{
-							'Brand': 'Ugly Shisha',
-							'Flavor': 'Hurricane',
-							'List': 'Enjoyed',
-							'Rating': '4'
-						},
-						{
-							'Brand': 'Fumari',
-							'Flavor': 'Sour Cherry',
-							'List': 'Enjoyed',
-							'Rating': '3'
-						}
-					]
-				};
-				break;
-			case 'Plan to smoke':
-				data = {
-					'data': [
-						{
-							'Brand': 'Starbuzz',
-							'Flavor': 'Classic Mojito',
-							'List': 'Plan to smoke',
-							'Rating': '0'
-						},
-						{
-							'Brand': 'Starbuzz',
-							'Flavor': 'Blue Mist',
-							'List': 'Plan to smoke',
-							'Rating': '0'
-						},
-						{
-							'Brand': 'Ugly Shisha',
-							'Flavor': 'Happy Hour',
-							'List': 'Plan to smoke',
-							'Rating': '3'
-						},
-						{
-							'Brand': 'Fumari',
-							'Flavor': 'Orange Cream',
-							'List': 'Plan to smoke',
-							'Rating': '0'
-						}
-					]
-				};
-				break;
-			case 'Disliked':
-				data = {
-					'data': [
-						{
-							'Brand': 'Starbuzz',
-							'Flavor': 'Hard Rush',
-							'List': 'Enjoyed',
-							'Rating': '1'
-						},
-						{
-							'Brand': 'Starbuzz',
-							'Flavor': 'Pink',
-							'List': 'Enjoyed',
-							'Rating': '2'
-						},
-						{
-							'Brand': 'Ugly Shisha',
-							'Flavor': 'Pomegranate',
-							'List': 'Enjoyed',
-							'Rating': '1'
-						},
-						{
-							'Brand': 'Fumari',
-							'Flavor': 'Mint',
-							'List': 'Enjoyed',
-							'Rating': '0'
-						}
-					]
-				};
-				break;
-		}
-		// Organize data here before returning it
 		let results = data['data'];
 		results.sort(function (a, b) {
 			if (a.Rating > b.Rating) {
