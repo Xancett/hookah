@@ -222,11 +222,13 @@ function OptionChange(op) {
 async function UpdateServer(data) {
 	try {
 		// Setup request
+		const jsonData = { 'inforequest': data };
 		const information = {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(data)
+			body: JSON.stringify(jsonData)
 		};
+		const response = await fetch('/shishaupdate', information);
 	} catch (error) {
 		console.log(error);
 	}
