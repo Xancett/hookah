@@ -32,3 +32,12 @@ app.post('/hookahapi', (request, response) => {
 		response.send(res);
 	});
 });
+
+// Update request
+app.post('/shishaupdate', (request, response) => {
+	// Check to ensure the request is proper
+	if (request.body['inforequest'] == null) { response.close(); }
+	Database.AddShisha('test', request.body.inforequest.data[0]).then(res => {
+		response.send(res);
+	});
+})
