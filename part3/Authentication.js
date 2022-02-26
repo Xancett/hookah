@@ -15,6 +15,7 @@ async function Login(username, password) {
 	let oneHour = 3600000;
 	// Add to the authenticatedUsers list
 	authenticatedUsers['tokens'].push({ 'username': username, 'token': token, 'expiration': Date.now() + oneHour });
+	return token;
 }
 
 // Checks if the authentication token is still valid
