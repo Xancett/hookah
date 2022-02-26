@@ -120,7 +120,7 @@ async function UpdateTable(menuOption) {
 			s.append(op0, op1, op2, op3);
 			cell4.append(s);
 			cell5.appendChild(document.createElement('div'));
-			Object.assign(cell5.children[0], { "innerText": "Not rated", "value": "0" });
+			Object.assign(cell5.children[0], { "innerText": "Not rated" });
 			row.appendChild(cell1);
 			row.appendChild(cell2);
 			row.appendChild(cell3);
@@ -211,7 +211,7 @@ function OptionChange(op) {
 				'Brand' : op.cells[1].textContent,
 				'Flavor' : op.cells[2].textContent,
 				'List': op.cells[3].children[0].getAttribute("value"),
-				'Rating': op.cells[4].children[0].getAttribute("value")
+				'Rating': (op.cells[4].children[0].getAttribute("value") != null ? op.cells[4].children[0].getAttribute("value") : "0")
 			}
 		]
 	};
@@ -223,6 +223,7 @@ async function UpdateServer(data) {
 	try {
 		// Setup request
 		const jsonData = { 'inforequest': data };
+		console.log(jsonData);
 		const information = {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
