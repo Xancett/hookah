@@ -97,8 +97,17 @@ async function UpdateTable(menuOption) {
 		// Wait again
 		let data = await response.json();
 		LoadingData(false);
+		// Create a list of all listed shisha to search and find values for in the table
+		let bigList = await GetList("Enjoyed");
+		await GetList("Plan to smoke").then(value => {
+			bigList['data'].push.apply(bigList['data'], value['data']);
+		})
+		await GetList("Disliked").then(value => {
+			bigList['data'].push.apply(bigList['data'], value['data']);
+		})
 		const table = document.querySelectorAll('#tableOfContents');
 		for (var i = 0; i < Object.keys(data).length; i++) {
+			let found = bigList['data'].find(o => o.Brand == jsonData['brand'] && o.Flavor == Object.keys(data)[i].trim());
 			let row = document.createElement('tr');
 			let cell1 = document.createElement('td');
 			let cell2 = document.createElement('td');
@@ -110,17 +119,20 @@ async function UpdateTable(menuOption) {
 			cell3.innerText = Object.keys(data)[i];
 			let s = document.createElement('select');
 			let op0 = document.createElement('option');
-			Object.assign(op0, { "text": "Select a list", "selected": true, "hidden": true, "disabled": true });
+			Object.assign(op0, { "text": "Select a list", "selected": (found == null), "hidden": true, "disabled": true });
 			let op1 = document.createElement('option');
 			Object.assign(op1, { "text": "Enjoyed", "value": "Enjoyed" });
+			if (found != null) { op1.selected = (found.List == op1.value)}
 			let op2 = document.createElement('option');
 			Object.assign(op2, { "text": "Plan to smoke", "value": "Plan to smoke" });
+			if (found != null) { op2.selected = (found.List == op2.value)}
 			let op3 = document.createElement('option');
 			Object.assign(op3, { "text": "Disliked", "value": "Disliked" });
+			if (found != null) { op3.selected = (found.List == op3.value)}
 			s.append(op0, op1, op2, op3);
 			cell4.append(s);
 			cell5.appendChild(document.createElement('div'));
-			Object.assign(cell5.children[0], { "innerText": "Not rated" });
+			Object.assign(cell5.children[0], { "innerText": (found == null) ? "Not rated" : found.Rating + "/5" });
 			row.appendChild(cell1);
 			row.appendChild(cell2);
 			row.appendChild(cell3);
