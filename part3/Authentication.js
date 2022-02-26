@@ -11,6 +11,10 @@ async function Login(username, password) {
 
 	// Generate token
 	let token = GenerateToken();
+	// Setup for list
+	let oneHour = 3600000;
+	// Add to the authenticatedUsers list
+	authenticatedUsers['tokens'].push({ 'username': username, 'token': token, 'expiration': Date.now() + oneHour });
 }
 
 // Checks if the authentication token is still valid
@@ -22,7 +26,14 @@ function Authenticated(token) {
 
 // Clears out any old tokens
 function ClearOldTokens() {
-
+	// Check if array is empty
+	if (authenticatedUsers['tokens'].length == 0) { return; }
+	// Iterate backwards through the array
+	for (let i = authenticatedUsers['tokens'].length - 1; i >= 0; i--) {
+		if (Date.now() > authenticatedUsers['tokens'][i]['expiration']) {
+			authenticatedUsers['tokens'].splice(i, 1);
+		}
+	}
 }
 
 // Generates a random security token
