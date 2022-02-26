@@ -47,11 +47,12 @@ async function SeekAndDestroy(username, info) {
 		return;
 	}
 	try {
-		let myList = {};
+		// Remove the list and ratings as they won't match what is currently in the DB
+		qInfo = { "Brand": info.Brand, "Flavor": info.Flavor };
 		// Try to remove from Enjoyed, Plan to smoke and Disliked
-		let res = await client.db("shisha-saver").collection("users").updateOne({ "username": username }, { $pull: {"Enjoyed" : info}});
-		res = await client.db("shisha-saver").collection("users").updateOne({ "username": username }, { $pull: {"Plan to smoke" : info}});
-		res = await client.db("shisha-saver").collection("users").updateOne({ "username": username }, { $pull: {"Disliked" : info}});
+		let res = await client.db("shisha-saver").collection("users").updateOne({ "username": username }, { $pull: {"Enjoyed" : qInfo}});
+		res = await client.db("shisha-saver").collection("users").updateOne({ "username": username }, { $pull: {"Plan to smoke" : qInfo}});
+		res = await client.db("shisha-saver").collection("users").updateOne({ "username": username }, { $pull: {"Disliked" : qInfo}});
 	} catch (error) {
 		console.log(error);
 	} finally {
