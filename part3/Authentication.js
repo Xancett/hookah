@@ -8,7 +8,9 @@ let authenticatedUsers = {"tokens": []};
 // Logs in the user, takes in username/password and if found setsup security token, passes it back
 async function Login(username, password) {
 	// Check if username and password are correct
-
+	if (username != 'test' || password != 'test') {
+		return false;
+	}
 	// Generate token
 	let token = GenerateToken();
 	// Setup for list
