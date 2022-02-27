@@ -23,6 +23,12 @@ function Authenticated(token) {
 	// Clear any old tokens first
 	ClearOldTokens();
 	// Check if the token exists in the list
+	for (let i = 0; i < authenticatedUsers['tokens'].length; i++) {
+        if (token == authenticatedUsers['tokens'][i]['token']) {
+            return true;
+        }
+    }
+    return false;
 }
 
 // Clears out any old tokens
