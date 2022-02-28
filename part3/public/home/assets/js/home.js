@@ -183,13 +183,17 @@ async function UpdateTable(menuOption) {
 
 // Function to get the list requested from the server
 async function GetList(listRequest) {
+	await CheckCookie();
 	try {
 		// Setup request
 		const jsonData = { 'inforequest': listRequest };
 		const information = {
 			method: 'POST',
 			mode: 'cors',
-			headers: { 'Content-Type': 'application/json' },
+			headers: {
+				'Content-Type': 'application/json',
+				'SecurityToken': document.cookie.split(';')[0].substring(document.cookie.indexOf('=') + 1)
+			},
 			body: JSON.stringify(jsonData)
 		};
 		// Send out information
@@ -232,13 +236,17 @@ function OptionChange(op) {
 
 // Updates the server with data
 async function UpdateServer(data) {
+	await CheckCookie();
 	try {
 		// Setup request
 		const jsonData = { 'inforequest': data };
 		console.log(jsonData);
 		const information = {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
+			headers: {
+				'Content-Type': 'application/json',
+				'SecurityToken': document.cookie.split(';')[0].substring(document.cookie.indexOf('=') + 1)
+			},
 			body: JSON.stringify(jsonData)
 		};
 		const response = await fetch('/shishaupdate', information);
@@ -272,4 +280,25 @@ function LoadingData(loading) {
 	} else {
 		$("body").removeClass("loading");
 	}
+}
+
+// Looks for cookie, if one doesn't exist then get the security token, won't be needed after login is implemented
+async function CheckCookie() {
+	if (!document.cookie.includes("SecurityToken")) {
+		try {
+			// Setup request
+			const jsonData = { 'username': 'test', 'password': 'test' };
+			const information = {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(jsonData)
+			};
+			const response = await fetch('/shishalogintoken', information);
+			let data = await response.json();
+			document.cookie = "SecurityToken=" + data['SecurityToken'] + "; SameSite=Strict";
+		} catch (error) {
+			console.log(error);
+		}
+	}
+	//console.log(document.cookie.split(';')[0].substring(document.cookie.indexOf('=') + 1));
 }
