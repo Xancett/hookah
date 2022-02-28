@@ -33,6 +33,15 @@ function Authenticated(token) {
     return false;
 }
 
+// Looks through the authenticatedUsers using the token and returns the username
+function GetUsername(token) {
+	for (let i = 0; i < authenticatedUsers['tokens'].length; i++) {
+        if (token == authenticatedUsers['tokens'][i]['token']) {
+            return authenticatedUsers['tokens'][i]['username'];
+        }
+    }
+}
+
 // Clears out any old tokens
 function ClearOldTokens() {
 	// Check if array is empty
@@ -59,3 +68,4 @@ function GenerateToken() {
 // Exports
 module.exports.Login = Login;
 module.exports.Authenticated = Authenticated;
+module.exports.GetUsername = GetUsername;
