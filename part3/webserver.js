@@ -28,7 +28,7 @@ app.get('/', (request, response) => {
 app.post('/hookahapi', (request, response) => {
 	// Check to ensure the request is proper
 	if (request.body['inforequest'] == null) { response.close(); }
-	Database.GetShisha('test', request.body.inforequest).then(res => {
+	Database.GetShisha(Auth.GetUsername(request.get('SecurityToken')), request.body.inforequest).then(res => {
 		//console.log(request.body.inforequest);
 		response.send(res);
 	});
@@ -38,7 +38,7 @@ app.post('/hookahapi', (request, response) => {
 app.post('/shishaupdate', (request, response) => {
 	// Check to ensure the request is proper
 	if (request.body['inforequest'] == null) { response.close(); }
-	Database.AddShisha('test', request.body.inforequest.data[0]).then(res => {
+	Database.AddShisha(Auth.GetUsername(request.get('SecurityToken')), request.body.inforequest.data[0]).then(res => {
 		response.send(res);
 	});
 })
