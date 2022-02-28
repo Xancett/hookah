@@ -1,3 +1,8 @@
+// Runs when the submit button is pressed
+function submitlogin() {
+	console.log("Submitting data");
+}
+
 // Sets information in the table on if the table is being loaded or not with data
 function LoadingData(loading) {
 	if (loading) {
