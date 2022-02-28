@@ -42,3 +42,15 @@ app.post('/shishaupdate', (request, response) => {
 		response.send(res);
 	});
 })
+
+// Request for security token
+app.post('/shishalogintoken', (request, response) => {
+	// Check if request has username and password
+	if (request.body['username'] == null || request.body['password'] == null) {
+		response.send({ "Bad Request": "Missing username or password" });
+	}
+	Auth.Login(request.body.username, request.body.password).then(res => {
+		console.log(res);
+		response.send({ "SecurityToken": res });
+	})
+});
