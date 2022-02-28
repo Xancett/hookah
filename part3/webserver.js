@@ -1,4 +1,6 @@
 const express = require('express');
+const multer = require('multer');
+const upload = multer();
 const app = express();
 const port = 3000;
 const Database = require('./database');
@@ -8,6 +10,9 @@ const Auth = require('./Authentication');
 // Setup app
 app.use(express.static(__dirname + '/public'));
 app.use(express.json({ limit: '1mb' }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(upload.array());
 app.listen(port, () => {
 	console.log("Listening...");
 });
@@ -57,4 +62,10 @@ app.post('/shishalogintoken', (request, response) => {
 		console.log(res);
 		response.send({ "SecurityToken": res });
 	})
+});
+
+// Request for login
+app.post('/login.html', (request, response) => {
+	console.log(request.body);
+	response.send({ "Hello": "world" });
 });
