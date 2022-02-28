@@ -28,6 +28,8 @@ app.get('/', (request, response) => {
 app.post('/hookahapi', (request, response) => {
 	// Check to ensure the request is proper
 	if (request.body['inforequest'] == null) { response.close(); }
+	if (request.get('SecurityToken') == null) { response.sendFile(__dirname + "/public/login.html"); }
+	if (!Auth.Authenticated(request.get('SecurityToken'))) { response.sendFile(__dirname + "/public/login.html");}
 	Database.GetShisha(Auth.GetUsername(request.get('SecurityToken')), request.body.inforequest).then(res => {
 		//console.log(request.body.inforequest);
 		response.send(res);
@@ -38,6 +40,8 @@ app.post('/hookahapi', (request, response) => {
 app.post('/shishaupdate', (request, response) => {
 	// Check to ensure the request is proper
 	if (request.body['inforequest'] == null) { response.close(); }
+	if (request.get('SecurityToken') == null) { response.sendFile(__dirname + "/public/login.html"); }
+	if (!Auth.Authenticated(request.get('SecurityToken'))) { response.sendFile(__dirname + "/public/login.html");}
 	Database.AddShisha(Auth.GetUsername(request.get('SecurityToken')), request.body.inforequest.data[0]).then(res => {
 		response.send(res);
 	});
