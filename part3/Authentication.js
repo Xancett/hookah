@@ -36,10 +36,11 @@ function Authenticated(token) {
 // Looks through the authenticatedUsers using the token and returns the username
 function GetUsername(token) {
 	for (let i = 0; i < authenticatedUsers['tokens'].length; i++) {
-        if (token == authenticatedUsers['tokens'][i]['token']) {
-            return authenticatedUsers['tokens'][i]['username'];
+		if (token == authenticatedUsers['tokens'][i]['token']) {
+			return authenticatedUsers['tokens'][i]['username'];
         }
-    }
+	}
+	return null;
 }
 
 // Clears out any old tokens
