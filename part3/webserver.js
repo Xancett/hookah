@@ -11,7 +11,7 @@ const Auth = require('./Authentication');
 app.use(express.static(__dirname + '/public'));
 app.use(express.json({ limit: '1mb' }));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(upload.array());
 app.listen(port, () => {
 	console.log("Listening...");
@@ -27,6 +27,11 @@ app.get('/', (request, response) => {
 	//Database.UpdateList('test', [{ "Brand": "Starbuzz", "Flavor": "Black Grape", "List": "Enjoyed", "Rating": "3" }, { "Brand": "Starbuzz", "Flavor": "Candy", "List": "Enjoyed", "Rating": "5" }, { "Brand": "Ugly Shisha", "Flavor": "Hurricane", "List": "Enjoyed", "Rating": "4" }, { "Brand": "Fumari", "Flavor": "Sour Cherry", "List": "Enjoyed", "Rating": "3" } ]);
 	//Database.SeekAndDestroy('test', {"Brand": "Fumari", "Flavor": "Mint", "List": "Enjoyed", "Rating": "4"});
 	response.sendFile(__dirname + "/public/home.html");
+});
+
+// Login page
+app.get('/login', (request, response) => {
+	response.sendFile(__dirname + '/public/login.html');
 });
 
 // List request
@@ -63,9 +68,9 @@ app.post('/shishalogintoken', (request, response) => {
 		response.send({ "SecurityToken": res });
 	})
 });
-
+/*
 // Request for login
 app.post('/login.html', (request, response) => {
 	console.log(request.body);
 	response.send({ "Hello": "world" });
-});
+});*/
