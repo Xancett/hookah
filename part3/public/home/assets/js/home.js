@@ -192,7 +192,7 @@ async function GetList(listRequest) {
 			mode: 'cors',
 			headers: {
 				'Content-Type': 'application/json',
-				'SecurityToken': document.cookie.split(';')[0].substring(document.cookie.indexOf('=') + 1)
+				'SecurityToken': GetCookie()
 			},
 			body: JSON.stringify(jsonData)
 		};
@@ -245,7 +245,7 @@ async function UpdateServer(data) {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				'SecurityToken': document.cookie.split(';')[0].substring(document.cookie.indexOf('=') + 1)
+				'SecurityToken': GetCookie()
 			},
 			body: JSON.stringify(jsonData)
 		};
@@ -284,7 +284,7 @@ function LoadingData(loading) {
 
 // Looks for cookie, if one doesn't exist then get the security token, won't be needed after login is implemented
 async function CheckCookie() {
-	if (!document.cookie.includes("SecurityToken")) {
+	if (!document.cookie.includes("SecurityTolkien")) {
 		try {
 			// Setup request
 			const jsonData = { 'username': 'test', 'password': 'test' };
@@ -300,5 +300,14 @@ async function CheckCookie() {
 			console.log(error);
 		}
 	}
-	//console.log(document.cookie.split(';')[0].substring(document.cookie.indexOf('=') + 1));
+}
+
+function GetCookie() {
+	let st = "SecurityToken=";
+	let ca = document.cookie.split(';');
+	for (let i = 0; i < ca.length; i++) {
+		if (ca[i].includes(st)) {
+			return ca[i].substring(ca[i].indexOf(st) + 14);
+		}
+	}
 }
