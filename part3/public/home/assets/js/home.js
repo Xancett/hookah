@@ -183,7 +183,6 @@ async function UpdateTable(menuOption) {
 
 // Function to get the list requested from the server
 async function GetList(listRequest) {
-	await CheckCookie();
 	try {
 		// Setup request
 		const jsonData = { 'inforequest': listRequest };
@@ -236,7 +235,6 @@ function OptionChange(op) {
 
 // Updates the server with data
 async function UpdateServer(data) {
-	await CheckCookie();
 	try {
 		// Setup request
 		const jsonData = { 'inforequest': data };
@@ -279,26 +277,6 @@ function LoadingData(loading) {
 		$("body").addClass("loading");
 	} else {
 		$("body").removeClass("loading");
-	}
-}
-
-// Looks for cookie, if one doesn't exist then get the security token, won't be needed after login is implemented
-async function CheckCookie() {
-	if (!document.cookie.includes("SecurityTolkien")) {
-		try {
-			// Setup request
-			const jsonData = { 'username': 'test', 'password': 'test' };
-			const information = {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(jsonData)
-			};
-			const response = await fetch('/shishalogintoken', information);
-			let data = await response.json();
-			document.cookie = "SecurityToken=" + data['SecurityToken'] + "; SameSite=Strict";
-		} catch (error) {
-			console.log(error);
-		}
 	}
 }
 
