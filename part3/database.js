@@ -76,7 +76,13 @@ async function HardReset() {
 		}
 }
 
+// Gets and returns a list of usernames and passwords
+async function GetUsersInfo() {
+
+}
+
 // Exports
 module.exports.GetShisha = GetShisha;
 module.exports.AddShisha = AddShisha;
 module.exports.HardReset = HardReset;
+module.exports.GetUsersInfo = GetUsersInfo;
