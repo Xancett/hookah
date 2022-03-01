@@ -60,27 +60,6 @@ async function SeekAndDestroy(username, info) {
 	}
 }
 
-/*
-// Updates an item in a list
-async function UpdateList(username, info) {
-	// Make sure call is correct
-	if (info['Brand'] == null || info['Flavor'] == null || info['List'] == null || info['Rating'] == null) { return; }
-	const client = await MongoClient.connect("mongodb://localhost:27017/").catch(err => { console.log(err) });
-	if (!client) {
-		return;
-	}
-	try {
-		let myList = {};
-		myList[info['List']] = info;
-		let res = await client.db("shisha-saver").collection("users").updateOne({ "username": username, "Flavor": info['Flavor'] }, { $set: myList });
-		console.log(res);
-	} catch (error) {
-		console.log(error);
-	} finally {
-		client.close();
-	}
-}
-*/
 async function HardReset() {
 		const client = await MongoClient.connect("mongodb://localhost:27017/").catch(err => { console.log(err) });
 		if (!client) {
