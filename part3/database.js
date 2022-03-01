@@ -77,12 +77,23 @@ async function HardReset() {
 }
 
 // Gets and returns a list of usernames and passwords
-async function GetUsersInfo() {
-
+async function GetUserPassword(username) {
+	const client = await MongoClient.connect("mongodb://localhost:27017/").catch(err => { console.log(err) });
+	if (!client) {
+		return;
+	}
+	try {
+		let res = await client.db("shisha-saver").collection("users").findOne({ "username": username });
+		return res['password'];
+	} catch (error) {
+		console.log(error);
+	} finally {
+		client.close();
+	}
 }
 
 // Exports
 module.exports.GetShisha = GetShisha;
 module.exports.AddShisha = AddShisha;
 module.exports.HardReset = HardReset;
-module.exports.GetUsersInfo = GetUsersInfo;
+module.exports.GetUserPassword = GetUserPassword;
