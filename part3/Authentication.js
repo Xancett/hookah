@@ -1,4 +1,5 @@
 // Requires
+const bcrypt = require('bcrypt');
 
 // Global variables
 let authenticatedUsers = {"tokens": []};
@@ -65,6 +66,13 @@ function GenerateToken() {
 	}
 	return result;
 }
+
+// Hashes password and returns result
+async function HashPassword(password) {
+	const hash = await bcrypt.hash(password, 10);
+	return hash;
+}
+
 
 // Exports
 module.exports.Login = Login;
