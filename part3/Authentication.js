@@ -7,10 +7,14 @@ let authenticatedUsers = {"tokens": []};
 // Functions
 
 // Logs in the user, takes in username/password and if found setsup security token, passes it back
-async function Login(username, password) {
+async function Login(username, password, db) {
 	// Check if username and password are correct
-	if (username != 'test' || password != 'test') {
-		return false;
+	let dbPass = await db.GetUserPassword(username);
+	if (dbPass == null) { return null; }
+	// If the password doesn't match, return null
+	let comp = await bcrypt.compare(password, dbPass);
+	if (!comp) {
+		return null;
 	}
 	// Generate token
 	let token = GenerateToken();
