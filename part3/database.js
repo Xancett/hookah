@@ -124,3 +124,4 @@ module.exports.GetShisha = GetShisha;
 module.exports.AddShisha = AddShisha;
 module.exports.HardReset = HardReset;
 module.exports.GetUserPassword = GetUserPassword;
+module.exports.CreateAccount = CreateAccount;
