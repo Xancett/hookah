@@ -84,7 +84,10 @@ async function GetUserPassword(username) {
 	}
 	try {
 		let res = await client.db("shisha-saver").collection("users").findOne({ "username": username });
-		if (res == null) { return null; }
+		if (res == null) {
+			console.log("Could not find a user with username:" + username);
+			return null;
+		}
 		return res['password'];
 	} catch (error) {
 		console.log(error);
