@@ -40,27 +40,7 @@ async function CreateAccount(username, password) {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(jsonData)
 		};
-		const response = await fetch('/shishalogintoken', information);
-		let data = await response.json();
-		const d = new Date();
-		d.setTime(d.getTime() + 86400000);
-		document.cookie = "SecurityToken=" + data['SecurityToken'] + "; SameSite=Strict;" + "expires=" + d.toUTCString() + ";path=/";
-		token = data['SecurityToken'];
-		LoadingData(false);
-		PageRedirect(token);
-	} catch (error) {
-		console.log(error);
-	}
-}
-
-async function PageRedirect(token) {
-	try {
-		// Setup request
-		const information = {
-			method: 'GET',
-			headers: { 'Content-Type': 'application/json', 'SecurityToken': token }
-		};
-		const response = await fetch('/', information);
+		const response = await fetch('/createaccount', information);
 		window.location.href = response.url;
 	} catch (error) {
 		console.log(error);
