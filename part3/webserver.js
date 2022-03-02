@@ -34,6 +34,11 @@ app.get('/login', (request, response) => {
 	response.sendFile(__dirname + '/public/login.html');
 });
 
+// Account setup page
+app.get('/accountsetup', (request, response) => {
+	response.sendFile(__dirname + '/public/create.html');
+});
+
 // List request
 app.post('/hookahapi', (request, response) => {
 	// Check to ensure the request is proper
