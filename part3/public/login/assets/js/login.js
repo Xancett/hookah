@@ -32,7 +32,7 @@ function LoadingData(loading) {
 // Starts the call for logging in
 async function LogIn(username, password) {
 	let token = "";
-	if (GetCookie() != "") {
+	if (GetCookie() != "" && GetCookie() != undefined) {
 		token = GetCookie();
 		PageRedirect(token);
 	}
