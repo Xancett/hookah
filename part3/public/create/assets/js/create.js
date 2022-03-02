@@ -14,7 +14,7 @@ window.addEventListener('load', function() {
 				console.log("Start spinning wheel");
 				LoadingData(true);
 				event.preventDefault();
-				LogIn(form[0].value, form[1].value);
+				CreateAccount(form[0].value, form[1].value);
 			}
     	}, false);
 	});
@@ -30,12 +30,8 @@ function LoadingData(loading) {
 }
 
 // Starts the call for logging in
-async function LogIn(username, password) {
+async function CreateAccount(username, password) {
 	let token = "";
-	if (GetCookie() != "" && GetCookie() != undefined) {
-		token = GetCookie();
-		PageRedirect(token);
-	}
 	try {
 		// Setup request
 		const jsonData = { 'username': username, 'password': password };
@@ -68,15 +64,5 @@ async function PageRedirect(token) {
 		window.location.href = response.url;
 	} catch (error) {
 		console.log(error);
-	}
-}
-
-function GetCookie() {
-	let st = "SecurityToken=";
-	let ca = document.cookie.split(';');
-	for (let i = 0; i < ca.length; i++) {
-		if (ca[i].includes(st)) {
-			return ca[i].substring(ca[i].indexOf(st) + 14);
-		}
 	}
 }
