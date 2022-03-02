@@ -96,6 +96,29 @@ async function GetUserPassword(username) {
 	}
 }
 
+// Creates an account for the user
+async function CreateAccount(username, hashedPass) {
+	// Assuming the username isn't blank and the password is hashed, create an account for that user
+	const client = await MongoClient.connect("mongodb://localhost:27017/").catch(err => { console.log(err) });
+	if (!client) {
+		return;
+	}
+	try {
+		let data = {
+			"username": username,
+			"password": hashedPass,
+			"Enjoyed": [],
+			"Plan to smoke": [],
+			"Disliked": []
+		};
+		let res = await client.db("shisha-saver").collection("users").insertOne(data);
+	} catch (error) {
+		console.log(error);
+	} finally {
+		client.close();
+	}
+}
+
 // Exports
 module.exports.GetShisha = GetShisha;
 module.exports.AddShisha = AddShisha;
