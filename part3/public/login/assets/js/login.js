@@ -32,10 +32,7 @@ function LoadingData(loading) {
 // Starts the call for logging in
 async function LogIn(username, password) {
 	let token = "";
-	if (GetCookie() != "" && GetCookie() != undefined) {
-		token = GetCookie();
-		PageRedirect(token);
-	}
+	ClearCookies();
 	try {
 		// Setup request
 		const jsonData = { 'username': username, 'password': password };
@@ -49,7 +46,7 @@ async function LogIn(username, password) {
 		const d = new Date();
 		d.setTime(d.getTime() + 86400000);
 		document.cookie = "SecurityToken=" + data['SecurityToken'] + "; SameSite=Strict;" + "expires=" + d.toUTCString() + ";path=/";
-		token = data['SecurityToken'];
+		let token = data['SecurityToken'];
 		LoadingData(false);
 		PageRedirect(token);
 	} catch (error) {
@@ -71,12 +68,6 @@ async function PageRedirect(token) {
 	}
 }
 
-function GetCookie() {
-	let st = "SecurityToken=";
-	let ca = document.cookie.split(';');
-	for (let i = 0; i < ca.length; i++) {
-		if (ca[i].includes(st)) {
-			return ca[i].substring(ca[i].indexOf(st) + 14);
-		}
-	}
+function ClearCookies() {
+	document.cookie = "SecurityToken= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
 }
