@@ -31,7 +31,6 @@ function LoadingData(loading) {
 
 // Starts the call for logging in
 async function CreateAccount(username, password) {
-	let token = "";
 	try {
 		// Setup request
 		const jsonData = { 'username': username, 'password': password };
