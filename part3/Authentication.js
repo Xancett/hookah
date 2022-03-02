@@ -82,3 +82,4 @@ async function HashPassword(password) {
 module.exports.Login = Login;
 module.exports.Authenticated = Authenticated;
 module.exports.GetUsername = GetUsername;
+module.exports.HashPassword = HashPassword;
