@@ -68,3 +68,19 @@ app.post('/shishalogintoken', (request, response) => {
 		response.send({ "SecurityToken": res });
 	})
 });
+
+// Request for creating an account
+app.post('/createaccount', (request, response) => {
+	// Check that username and password exist
+	if (request.body['username'] == null || request.body['password'] == null) {
+		response.send({ "Bad request": "Missing username or password" });
+	}
+	// First hash the password given
+	Auth.HashPassword(request.body['password']).then(res => {
+		// Pass in the hashed password to create the account
+		Database.CreateAccount(request.body.username, res).then(res2 => {
+			// Re-direct the user to the login page
+			response.sendFile(__dirname + '/public/login.html');
+		});
+	});
+});
