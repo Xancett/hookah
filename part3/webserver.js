@@ -63,8 +63,8 @@ app.post('/shishalogintoken', (request, response) => {
 	if (request.body['username'] == null || request.body['password'] == null) {
 		response.send({ "Bad Request": "Missing username or password" });
 	}
-	Auth.Login(request.body.username, request.body.password).then(res => {
-		console.log(res);
+	Auth.Login(request.body.username, request.body.password, Database).then(res => {
+		if (res == null) { response.send(res); } // Send null if we recieved null
 		response.send({ "SecurityToken": res });
 	})
 });
