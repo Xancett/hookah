@@ -1,5 +1,6 @@
 // Requires
 const bcrypt = require('bcrypt');
+const crypto = require('crypto')
 
 // Global variables
 let authenticatedUsers = {"tokens": []};
@@ -17,7 +18,7 @@ async function Login(username, password, db) {
 		return null;
 	}
 	// Generate token
-	let token = GenerateToken();
+	let token = await GenerateToken();
 	// Setup for list
 	let oneHour = 3600000;
 	// Add to the authenticatedUsers list
@@ -61,14 +62,10 @@ function ClearOldTokens() {
 }
 
 // Generates a random security token
-function GenerateToken() {
-	let length = 12;
-	let result = '';
-	var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for ( var i = 0; i < length; i++ ) {
-		result += characters.charAt(Math.floor(Math.random() * characters.length));
-	}
-	return result;
+async function GenerateToken() {
+	let buffer = await crypto.randomBytes(64);
+	//console.log(buffer.toString('base64'));
+	return buffer.toString('base64');
 }
 
 // Hashes password and returns result
