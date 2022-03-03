@@ -76,17 +76,23 @@ app.post('/shishalogintoken', (request, response) => {
 
 // Request for creating an account
 app.post('/createaccount', (request, response) => {
-	console.log("Create account request");
 	// Check that username and password exist
 	if (request.body['username'] == null || request.body['password'] == null) {
 		response.send({ "Bad request": "Missing username or password" });
 	}
-	// First hash the password given
-	Auth.HashPassword(request.body['password']).then(res => {
-		// Pass in the hashed password to create the account
-		Database.CreateAccount(request.body.username, res).then(res2 => {
-			// Re-direct the user to the login page
-			response.redirect('/login');
-		});
-	});
+	// Check to make sure user doesn't already exist in the DB
+	Database.GetUserPassword(request.body.username).then(existance => {
+		if (existance != null) {
+			response.send({ "Error": "Username already exists" });
+		} else {
+			// First hash the password given
+			Auth.HashPassword(request.body['password']).then(res => {
+				// Pass in the hashed password to create the account
+				Database.CreateAccount(request.body.username, res).then(res2 => {
+					// Re-direct the user to the login page
+					response.redirect('/login');
+				});
+			});
+		}
+	})
 });
