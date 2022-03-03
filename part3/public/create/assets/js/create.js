@@ -31,6 +31,8 @@ function LoadingData(loading) {
 
 // Starts the call for logging in
 async function CreateAccount(username, password) {
+	// First remove the is-invalid class from username in case it was added
+	document.getElementById("formUsername").classList.remove("is-invalid");
 	try {
 		// Setup request
 		const jsonData = { 'username': username, 'password': password };
@@ -40,7 +42,17 @@ async function CreateAccount(username, password) {
 			body: JSON.stringify(jsonData)
 		};
 		const response = await fetch('/createaccount', information);
-		window.location.href = response.url;
+		if (response.redirected) {
+			// Account created, no issues here
+			window.location.href = response.url;
+		} else {
+			// Account not yet created, there is an error
+			LoadingData(false);
+			let res = await response.json();
+			if (res.Error == "Username already exists") {
+				document.getElementById("formUsername").classList.add("is-invalid");
+			}
+		}
 	} catch (error) {
 		console.log(error);
 	}
