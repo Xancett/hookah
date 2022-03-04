@@ -32,8 +32,6 @@ function LoadingData(loading) {
 
 // Starts the call for logging in
 async function LogIn(username, password) {
-	let token = "";
-	ClearCookies();
 	try {
 		// Setup request
 		const jsonData = { 'username': username, 'password': password };
