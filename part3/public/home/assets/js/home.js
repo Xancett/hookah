@@ -148,7 +148,7 @@ async function UpdateTable(menuOption) {
 	} else {
 		listData = await GetList(menuOption);
 		LoadingData(false);
-		if (listData == undefined) {
+		if (listData == null) {
 			document.getElementById("firsttime").style.visibility = "visible";
 			document.getElementById("firsttime").innerText = "An error occured, please try logging out then back in";
 		}
