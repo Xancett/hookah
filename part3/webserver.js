@@ -69,8 +69,11 @@ app.post('/shishalogintoken', (request, response) => {
 		response.send({ "Bad Request": "Missing username or password" });
 	}
 	Auth.Login(request.body.username, request.body.password, Database).then(res => {
-		if (res == null) { response.send(res); } // Send null if we recieved null
-		response.send({ "SecurityToken": res });
+		if (res == null) {
+			response.send({ "Error": "Username or password incorrect" });// Send null if we recieved null
+		} else {
+			response.send({ "SecurityToken": res });
+		}
 	})
 });
 
