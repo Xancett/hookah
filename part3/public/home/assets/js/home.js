@@ -114,9 +114,10 @@ async function UpdateTable(menuOption) {
 			let cell3 = document.createElement('td');
 			let cell4 = document.createElement('td');
 			let cell5 = document.createElement('td');
-			cell1.innerText = "Image missing";
-			cell2.innerText = jsonData['brand'];
-			cell3.innerText = Object.keys(data)[i];
+			cell1.innerText = jsonData['brand'];
+			cell2.innerText = Object.keys(data)[i];
+			cell3.innerText = Object.values(data)[i];
+			cell3.style.whiteSpace = "pre-wrap";
 			let s = document.createElement('select');
 			let op0 = document.createElement('option');
 			Object.assign(op0, { "text": "Select a list", "selected": (found == null), "hidden": true, "disabled": true });
