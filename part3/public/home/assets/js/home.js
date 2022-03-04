@@ -148,6 +148,12 @@ async function UpdateTable(menuOption) {
 	} else {
 		listData = await GetList(menuOption);
 		LoadingData(false);
+		console.log(listData);
+		if (listData['data'].length == 0) {
+			document.getElementById("firsttime").style.visibility = "visible";
+		} else {
+			document.getElementById("firsttime").style.visibility = "hidden";
+		}
 		for (var i = 0; i < listData['data'].length; i++) {
 			let row = document.createElement('tr');
 			let cell1 = document.createElement('td');
