@@ -13,6 +13,7 @@ async function GetShisha(username, list) {
 		return requestedList;
 	} catch (error) {
 		console.log(error);
+		return null;
 	} finally {
 		client.close();
 	}
