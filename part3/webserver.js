@@ -20,13 +20,10 @@ app.listen(port, () => {
 
 // Home page
 app.get('/', (request, response) => {
-	console.log("Get / requested");
 	if (request.get('cookie') != "" && request.get('cookie') != undefined) {
 		if (!Auth.Authenticated(request.get('cookie').replace("SecurityToken=", ""))) {
-			console.log(request.get('cookie').replace("SecurityToken=", ""));
 			response.redirect('/login');
 		} else {
-			console.log("Send home");
 			response.sendFile(__dirname + "/public/home.html");
 		}
 	} else {
@@ -36,7 +33,6 @@ app.get('/', (request, response) => {
 
 // Login page
 app.get('/login', (request, response) => {
-	console.log("Get /login requested");
 	response.sendFile(__dirname + '/public/login.html');
 });
 
@@ -70,7 +66,6 @@ app.post('/shishaupdate', (request, response) => {
 
 // Request for security token
 app.post('/shishalogintoken', (request, response) => {
-	console.log("post /shishalogintoken requested");
 	// Check if request has username and password
 	if (request.body['username'] == null || request.body['password'] == null) {
 		response.send({ "Bad Request": "Missing username or password" });
