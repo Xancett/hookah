@@ -1,7 +1,7 @@
 
 // Event listener for the submit button
 window.addEventListener('load', function() {
-	console.log("Window load");
+	ClearCookies();
 	// Fetch all the forms we want to apply custom Bootstrap validation styles to
     var forms = document.getElementsByClassName('needs-validation');
     // Loop over them and prevent submission
