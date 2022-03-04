@@ -20,17 +20,23 @@ app.listen(port, () => {
 
 // Home page
 app.get('/', (request, response) => {
-	//Database.HardReset();
-	//Database.UpdateList('test', {"Brand": "Fumari", "Flavor": "Mint", "List": "Enjoyed", "Rating": "4"});
-	//Database.AddShisha('test', {"Brand": "Fumari", "Flavor": "Mint", "List": "Enjoyed", "Rating": "4"});
-	//Database.GetShisha('test', 'Enjoyed').then(response => console.log(response));
-	//Database.UpdateList('test', [{ "Brand": "Starbuzz", "Flavor": "Black Grape", "List": "Enjoyed", "Rating": "3" }, { "Brand": "Starbuzz", "Flavor": "Candy", "List": "Enjoyed", "Rating": "5" }, { "Brand": "Ugly Shisha", "Flavor": "Hurricane", "List": "Enjoyed", "Rating": "4" }, { "Brand": "Fumari", "Flavor": "Sour Cherry", "List": "Enjoyed", "Rating": "3" } ]);
-	//Database.SeekAndDestroy('test', {"Brand": "Fumari", "Flavor": "Mint", "List": "Enjoyed", "Rating": "4"});
-	response.sendFile(__dirname + "/public/home.html");
+	console.log("Get / requested");
+	if (request.get('cookie') != "" && request.get('cookie') != undefined) {
+		if (!Auth.Authenticated(request.get('cookie').replace("SecurityToken=", ""))) {
+			console.log(request.get('cookie').replace("SecurityToken=", ""));
+			response.redirect('/login');
+		} else {
+			console.log("Send home");
+			response.sendFile(__dirname + "/public/home.html");
+		}
+	} else {
+		response.redirect('/login');
+	}
 });
 
 // Login page
 app.get('/login', (request, response) => {
+	console.log("Get /login requested");
 	response.sendFile(__dirname + '/public/login.html');
 });
 
@@ -64,6 +70,7 @@ app.post('/shishaupdate', (request, response) => {
 
 // Request for security token
 app.post('/shishalogintoken', (request, response) => {
+	console.log("post /shishalogintoken requested");
 	// Check if request has username and password
 	if (request.body['username'] == null || request.body['password'] == null) {
 		response.send({ "Bad Request": "Missing username or password" });
