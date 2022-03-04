@@ -165,9 +165,10 @@ async function UpdateTable(menuOption) {
 			let cell3 = document.createElement('td');
 			let cell4 = document.createElement('td');
 			let cell5 = document.createElement('td');
-			cell1.innerText = "Image missing";
-			cell2.innerText = listData['data'][i].Brand;
-			cell3.innerText = listData['data'][i].Flavor;
+			cell1.innerText = listData['data'][i].Brand;
+			cell2.innerText = listData['data'][i].Flavor;
+			cell3.innerText = listData['data'][i].Description;
+			cell3.style.whiteSpace = "pre-wrap";
 			// Create a dropdown
 			let s = document.createElement('select');
 			s.setAttribute("value", menuOption);
@@ -233,8 +234,9 @@ function OptionChange(op) {
 	optionChange = {
 		data : [
 			{
-				'Brand' : op.cells[1].textContent,
-				'Flavor' : op.cells[2].textContent,
+				'Brand' : op.cells[0].textContent,
+				'Flavor': op.cells[1].textContent,
+				'Description': op.cells[2].textContent,
 				'List': op.cells[3].children[0].getAttribute("value"),
 				'Rating': (op.cells[4].children[0].getAttribute("value") != null ? op.cells[4].children[0].getAttribute("value") : "0")
 			}
