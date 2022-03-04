@@ -1,7 +1,8 @@
 
 // Event listener for the submit button
 window.addEventListener('load', function() {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+	console.log("Window load");
+	// Fetch all the forms we want to apply custom Bootstrap validation styles to
     var forms = document.getElementsByClassName('needs-validation');
     // Loop over them and prevent submission
     var validation = Array.prototype.filter.call(forms, function(form) {
@@ -43,12 +44,21 @@ async function LogIn(username, password) {
 		};
 		const response = await fetch('/shishalogintoken', information);
 		let data = await response.json();
-		const d = new Date();
-		d.setTime(d.getTime() + 86400000);
-		document.cookie = "SecurityToken=" + data['SecurityToken'] + "; SameSite=Strict;" + "expires=" + d.toUTCString() + ";path=/";
-		let token = data['SecurityToken'];
 		LoadingData(false);
-		PageRedirect(token);
+		// If we have a token we got logged in
+		if (data['SecurityToken'] != undefined) {
+			const d = new Date();
+			d.setTime(d.getTime() + 86400000);
+			document.cookie = "SecurityToken=" + data['SecurityToken'] + "; SameSite=Strict;" + "expires=" + d.toUTCString() + ";path=/";
+			let token = data['SecurityToken'];
+			PageRedirect(token);
+		}
+		// If we have an error, check what the error is
+		if (data['Error'] != undefined) {
+			if (data.Error == "Username or password incorrect") {
+				document.getElementById("formUsername").classList.add("is-invalid");
+			}
+		}
 	} catch (error) {
 		console.log(error);
 	}
