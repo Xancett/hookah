@@ -69,7 +69,7 @@ async function PageRedirect(token) {
 			method: 'GET',
 			headers: { 'Content-Type': 'application/json', 'SecurityToken': token }
 		};
-		const response = await fetch('/', information);
+		const response = await fetch('/shishasaver/', information);
 		window.location.href = response.url;
 	} catch (error) {
 		console.log(error);
