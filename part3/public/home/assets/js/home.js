@@ -99,14 +99,12 @@ async function UpdateTable(menuOption) {
 		LoadingData(false);
 		// Create a list of all listed shisha to search and find values for in the table
 		let bigList = await GetList("Enjoyed");
-		console.log(bigList);
 		await GetList("Plan to smoke").then(value => {
 			bigList['data'].push.apply(bigList['data'], value['data']);
 		})
 		await GetList("Disliked").then(value => {
 			bigList['data'].push.apply(bigList['data'], value['data']);
 		})
-		console.log(bigList);
 		const table = document.querySelectorAll('#tableOfContents');
 		for (var i = 0; i < Object.keys(data).length; i++) {
 			let found = bigList['data'].find(o => o.Brand == jsonData['brand'] && o.Flavor.trim() == Object.keys(data)[i].trim());
