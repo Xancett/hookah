@@ -142,13 +142,6 @@ async function UpdateTable(menuOption) {
 			row.appendChild(cell4);
 			row.appendChild(cell5);
 			$("#tableOfContents").append(row);
-			// Debug stuff
-			if (found != null) {
-				console.log("Flavor: " + found.Flavor);
-				console.log("List: " + found.List);
-				console.log("Match endjoyed: " + (found.List == "Enjoyed"));
-				console.log(op1.selected);
-			}
 		}
 		delete brands[Object.keys(brands)[0]];
 		// Check if we have hit the end and shouldn't load anymore data
