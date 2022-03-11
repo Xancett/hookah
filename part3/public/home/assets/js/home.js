@@ -244,7 +244,6 @@ async function UpdateServer(data) {
 	try {
 		// Setup request
 		const jsonData = { 'inforequest': data };
-		console.log(jsonData);
 		const information = {
 			method: 'POST',
 			headers: {
