@@ -7,14 +7,6 @@ let brands = {};
 
 // Adds the event listener to the menu
 document.addEventListener('click', e => {
-	// Check if we should foward to optioncheck
-	if (e.target.closest('option') != null) {
-		// Update parent with value
-		e.target.closest('option').parentElement.setAttribute("value", e.target.closest('option').text);
-		// Update server with changes
-		OptionChange(e.target.closest('option').parentElement.parentElement.parentElement);
-		return;
-	}
 	// Check if we are selecting menu items
 	if (e.target.closest('a') != null) {
 		// Get the selected object
@@ -131,6 +123,7 @@ async function UpdateTable(menuOption) {
 			Object.assign(op3, { "text": "Disliked", "value": "Disliked" });
 			if (found != null) { Object.assign(op3, { "selected": (found.List == op3.value) })}
 			s.append(op0, op1, op2, op3);
+			s.addEventListener("change", optionChangeEvent);
 			cell4.append(s);
 			cell5.appendChild(document.createElement('div'));
 			Object.assign(cell5.children[0], { "innerText": (found == null) ? "Not rated" : found.Rating + "/5" });
@@ -179,6 +172,7 @@ async function UpdateTable(menuOption) {
 			let op3 = document.createElement('option');
 			Object.assign(op3, { "text": "Disliked", "value": "Disliked", "selected": (menuOption == "Disliked") });
 			s.append(op1, op2, op3);
+			s.addEventListener("change", optionChangeEvent);
 			cell4.append(s);
 			//cell5.innerText = listData['data'][i].Rating;
 			cell5.appendChild(GetStars(listData['data'][i].Rating, listData['data'][i].Flavor));
@@ -237,7 +231,7 @@ function OptionChange(op) {
 				'Brand' : op.cells[0].textContent,
 				'Flavor': op.cells[1].textContent,
 				'Description': op.cells[2].textContent,
-				'List': op.cells[3].children[0].getAttribute("value"),
+				'List': op.cells[3].children[0].options[op.cells[3].children[0].selectedIndex].getAttribute("value"),
 				'Rating': (op.cells[4].children[0].getAttribute("value") != null ? op.cells[4].children[0].getAttribute("value") : "0")
 			}
 		]
@@ -300,4 +294,9 @@ function GetCookie() {
 			return ca[i].substring(ca[i].indexOf(st) + 14);
 		}
 	}
+}
+
+// Callback for drop-down menu, gets the required parent element and passes on to update the server
+function optionChangeEvent(e) {
+	OptionChange(e.target.parentElement.parentElement);
 }
