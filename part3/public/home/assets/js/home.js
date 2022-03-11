@@ -99,15 +99,17 @@ async function UpdateTable(menuOption) {
 		LoadingData(false);
 		// Create a list of all listed shisha to search and find values for in the table
 		let bigList = await GetList("Enjoyed");
+		console.log(bigList);
 		await GetList("Plan to smoke").then(value => {
 			bigList['data'].push.apply(bigList['data'], value['data']);
 		})
 		await GetList("Disliked").then(value => {
 			bigList['data'].push.apply(bigList['data'], value['data']);
 		})
+		console.log(bigList);
 		const table = document.querySelectorAll('#tableOfContents');
 		for (var i = 0; i < Object.keys(data).length; i++) {
-			let found = bigList['data'].find(o => o.Brand == jsonData['brand'] && o.Flavor == Object.keys(data)[i].trim());
+			let found = bigList['data'].find(o => o.Brand == jsonData['brand'] && o.Flavor.trim() == Object.keys(data)[i].trim());
 			let row = document.createElement('tr');
 			let cell1 = document.createElement('td');
 			let cell2 = document.createElement('td');
@@ -123,13 +125,13 @@ async function UpdateTable(menuOption) {
 			Object.assign(op0, { "text": "Select a list", "selected": (found == null), "hidden": true, "disabled": true });
 			let op1 = document.createElement('option');
 			Object.assign(op1, { "text": "Enjoyed", "value": "Enjoyed" });
-			if (found != null) { op1.selected = (found.List == op1.value)}
+			if (found != null) { Object.assign(op1, { "selected": (found.List == op1.value) }) }
 			let op2 = document.createElement('option');
 			Object.assign(op2, { "text": "Plan to smoke", "value": "Plan to smoke" });
-			if (found != null) { op2.selected = (found.List == op2.value)}
+			if (found != null) { Object.assign(op2, { "selected": (found.List == op2.value) })}
 			let op3 = document.createElement('option');
 			Object.assign(op3, { "text": "Disliked", "value": "Disliked" });
-			if (found != null) { op3.selected = (found.List == op3.value)}
+			if (found != null) { Object.assign(op3, { "selected": (found.List == op3.value) })}
 			s.append(op0, op1, op2, op3);
 			cell4.append(s);
 			cell5.appendChild(document.createElement('div'));
@@ -140,6 +142,13 @@ async function UpdateTable(menuOption) {
 			row.appendChild(cell4);
 			row.appendChild(cell5);
 			$("#tableOfContents").append(row);
+			// Debug stuff
+			if (found != null) {
+				console.log("Flavor: " + found.Flavor);
+				console.log("List: " + found.List);
+				console.log("Match endjoyed: " + (found.List == "Enjoyed"));
+				console.log(op1.selected);
+			}
 		}
 		delete brands[Object.keys(brands)[0]];
 		// Check if we have hit the end and shouldn't load anymore data
